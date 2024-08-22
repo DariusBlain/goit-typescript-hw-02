@@ -1,14 +1,19 @@
+import React from 'react';
 import toast, { Toaster } from "react-hot-toast";
 import { IoIosSearch } from "react-icons/io";
 import s from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
+interface SearchBarProps {
+  onSubmit: (text: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const notify = () => toast.error("Please enter search term!");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const form = e.target;
-    const text = form.text.value;
+    const form = e.currentTarget;
+    const text = (form.elements.namedItem("text") as HTMLInputElement).value;
     if (text.trim() === "") {
       notify();
       return;

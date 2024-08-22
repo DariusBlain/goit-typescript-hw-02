@@ -1,6 +1,7 @@
+import React from 'react'; 
 import { RotatingTriangles } from "react-loader-spinner";
 
-const Loader = () => {
+const Loader = (): React.ReactElement => {
   return (
     <RotatingTriangles
       visible={true}

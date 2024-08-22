@@ -1,6 +1,27 @@
+import React from 'react';
 import s from "./ImageModal.module.css";
 import ReactModal from "react-modal";
-const ImageModal = ({ onClose, isOpen, data }) => {
+
+interface User {
+  name?: string;
+}
+
+interface ImageData {
+  alt_description?: string;
+  likes?: number;
+  urls: {
+    regular?: string;
+  };
+  user?: User;
+}
+
+interface ImageModalProps {
+  onClose: () => void;
+  isOpen: boolean;
+  data: ImageData;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({ onClose, isOpen, data }) => {
   const { alt_description = "", likes = 0, urls, user } = data;
 
   return (

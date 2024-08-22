@@ -1,24 +1,34 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import SearchBar from "./SearchBar/SearchBar";
-import ImageGallery from "./ImageGallery/ImageGallery";
-import fetchImagesWithSearch from "../images-api";
+import SearchBar from "../SearchBar/SearchBar";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import fetchImagesWithSearch from "../../images-api";
 import "./App.css";
-import Loader from "./Loader/Loader";
-import ErrorMessage from "./ErrorMessage/ErrorMessage";
-import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
-import ImageModal from "./ImageModal/ImageModal";
+import Loader from "../Loader/Loader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "../ImageModal/ImageModal";
+
+interface Image {
+  id: string;
+  urls: {
+    small: string;
+    regular: string;
+    full: string;
+  };
+  alt_description: string;
+}
 
 function App() {
-  const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [notFound, setNotFound] = useState(false);
-  const [query, setQuery] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalImage, setModalImage] = useState({});
-  const lastImageRef = useRef(null);
+  const [page, setPage] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0);
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [notFound, setNotFound] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalImage, setModalImage] = useState<Partial<Image>>({});
+  const lastImageRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,13 +57,13 @@ function App() {
   useEffect(() => {
     if (page > 1 && lastImageRef.current) {
       setTimeout(() => {
-        const { top } = lastImageRef.current.getBoundingClientRect();
+        const top = lastImageRef.current?.getBoundingClientRect().top ?? 0;
         window.scrollTo({ top: window.scrollY + top, behavior: "smooth" });
       }, 100);
     }
   }, [images, page]);
 
-  const handleSetQuery = (query) => {
+  const handleSetQuery = (query: string) => {
     setQuery(query);
     setImages([]);
     setPage(1);
@@ -63,7 +73,7 @@ function App() {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const handleClickImage = (data) => {
+  const handleClickImage = (data: Image) => {
     setModalImage(data);
     setIsOpen(true);
   };
