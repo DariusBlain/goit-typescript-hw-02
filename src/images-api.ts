@@ -28,4 +28,3 @@ const fetchImagesWithSearch = async (
 };
 
 export default fetchImagesWithSearch;
-export {};

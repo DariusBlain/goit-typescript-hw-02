@@ -7,7 +7,6 @@ const Loader = (): React.ReactElement => {
       visible={true}
       height="120"
       width="120"
-      color="#4fa94d"
       ariaLabel="rotating-triangles-loading"
       wrapperStyle={{}}
       wrapperClass=""

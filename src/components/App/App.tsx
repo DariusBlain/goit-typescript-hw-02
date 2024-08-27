@@ -7,7 +7,7 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
-import { UnsplashResponse } from "./components/App/App.types";
+import { UnsplashResponse } from "./App.types";
 
 
 interface Image {
@@ -29,7 +29,7 @@ function App() {
   const [notFound, setNotFound] = useState<boolean>(false);
   const [query, setQuery] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [modalImage, setModalImage] = useState<Partial<Image>>({});
+  const [modalImage, setModalImage] = useState<Image | null>(null);
   const lastImageRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
@@ -82,6 +82,7 @@ function App() {
 
   const closeModal = () => {
     setIsOpen(false);
+    setModalImage(null);
   };
 
   return (
@@ -99,7 +100,8 @@ function App() {
       {total > page && !isLoading && !error && (
         <LoadMoreBtn handleClick={handleClick} />
       )}
-      <ImageModal onClose={closeModal} isOpen={isOpen} data={modalImage} />
+      {modalImage && (<ImageModal onClose={closeModal} isOpen={isOpen} data={modalImage} />
+      )}
     </>
   );
 }
