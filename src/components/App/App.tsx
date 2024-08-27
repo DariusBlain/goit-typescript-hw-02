@@ -7,6 +7,8 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
+import { UnsplashResponse } from "./components/App/App.types";
+
 
 interface Image {
   id: string;
@@ -37,7 +39,7 @@ function App() {
       setError(false);
       setNotFound(false);
       try {
-        const data = await fetchImagesWithSearch(query, page);
+        const data: UnsplashResponse = await fetchImagesWithSearch(query, page);
         if (data.results.length === 0) {
           setNotFound(true);
         } else {

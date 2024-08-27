@@ -1,23 +1,10 @@
 import axios, { AxiosResponse } from "axios";
+import { UnsplashResponse } from "./components/App/App.types";
 
 const BASE_URL = "https://api.unsplash.com";
 const END_POINT = "/search/photos";
 
-interface UnsplashImage {
-  id: string;
-  urls: {
-    small: string;
-    regular: string;
-    full: string;
-  };
-  alt_description: string;
-}
 
-interface UnsplashResponse {
-  results: UnsplashImage[];
-  total: number;
-  total_pages: number;
-}
 
 const fetchImagesWithSearch = async (
   searchQuery: string,
@@ -41,3 +28,4 @@ const fetchImagesWithSearch = async (
 };
 
 export default fetchImagesWithSearch;
+export {};
